@@ -12,6 +12,9 @@ class Websocket {
 
         io.of("/").adapter.on("join-room", (room, id) => {
             console.log(`socket ${id} has joined room ${room}`);
+            setTimeout(() => {
+                socket.to(room).emit("new_user", {count: io.sockets.adapter.rooms.get(room).size});
+            }, 1000)
         });
 
         io.of("/").adapter.on("leave-room", (room, id) => {
